@@ -5,6 +5,7 @@ GlassFish beüzemelése Linux (esetemben Ubuntu MATE 16.04) alatt:
 1. Töltsd le a glassfish-4.1.1.zip fájlt innen: https://glassfish.java.net/download.html
 2. Csomagold ki a glassfish-4.1.1.zip fájlt egy tetszőleges helyre.
 3. A maven home mappába (.m2) hozz létre egy settings.xml fájlt, az alábbi tartalommal:
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -27,7 +28,7 @@ GlassFish beüzemelése Linux (esetemben Ubuntu MATE 16.04) alatt:
         <activeProfile>glassfish-context</activeProfile>
     </activeProfiles>
 </settings>
-
+```
 A local.glassfish.home -ba írd be a korábban kicsomagolt mappában lévő glassfish mappát. Én a /opt -ba csomagoltam ki.
 
 4. Navigálj a glassfish4/bin/ mappába és add ki az "asadmin start-domain" parancsot. Ennek hatására elindul a GlassFish.
