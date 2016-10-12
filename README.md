@@ -2,6 +2,7 @@
 Egy egyszerű Java-Servlet app, ami a GlassFish szervert használja.
 
 GlassFish beüzemelése Linux (esetemben Ubuntu MATE 16.04) alatt:
+
 1. Töltsd le a glassfish-4.1.1.zip fájlt innen: https://glassfish.java.net/download.html
 
 2. Csomagold ki a glassfish-4.1.1.zip fájlt egy tetszőleges helyre.
