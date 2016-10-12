@@ -34,8 +34,8 @@ GlassFish beüzemelése Linux (esetemben Ubuntu MATE 16.04) alatt:
 ```
 A local.glassfish.home -ba írd be a korábban kicsomagolt mappában lévő glassfish mappát. Én a /opt -ba csomagoltam ki.
 
-4. Navigálj a glassfish4/bin/ mappába és add ki az "asadmin start-domain" parancsot. Ennek hatására elindul a GlassFish.
-5. Mostmár lehet indítani a projectet: mvn clean package glassfish:deploy
+4. Navigálj a glassfish4/bin/ mappába és add ki az `asadmin start-domain` parancsot. Ennek hatására elindul a GlassFish.
+5. Mostmár lehet indítani a projectet: `mvn clean package glassfish:deploy`
 
 A böngészőben a
 `localhost:8080/glassfish/welcome`
