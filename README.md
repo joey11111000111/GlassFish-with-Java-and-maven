@@ -40,3 +40,5 @@ A local.glassfish.home -ba írd be a korábban kicsomagolt mappában lévő glas
 A böngészőben a
 `localhost:8080/glassfish/welcome`
 oldalra menj, ahol egy kérsoros üzenetet kell látnod.
+
+Megjegyzés: Ha egyszer már megvolt a deploy, akkor utána a `glassfish:redeploy` -al lehet megint deploy-olni.
