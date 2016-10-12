@@ -36,6 +36,7 @@ A local.glassfish.home -ba írd be a korábban kicsomagolt mappában lévő glas
 
 4. Navigálj a glassfish4/bin/ mappába és add ki az "asadmin start-domain" parancsot. Ennek hatására elindul a GlassFish.
 5. Mostmár lehet indítani a projectet: mvn clean package glassfish:deploy
-A böngészőben
-localhost:8080/glassfish/welcome
+
+A böngészőben a
+`localhost:8080/glassfish/welcome`
 oldalra menj, ahol egy kérsoros üzenetet kell látnod.
