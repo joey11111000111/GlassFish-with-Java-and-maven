@@ -37,7 +37,7 @@ A local.glassfish.home -ba írd be a korábban kicsomagolt mappában lévő glas
 Leállítani a `./asadmin stop-domain` paranccsal lehet. Indítás után egy néhány soros üzenet jelenik meg, melyben egy portszám is megtalálható.
 A `localhost:port` címen a glassfish beállításait lehet elérni, tipikusan a `4848` -as porton.
 
-5. Mostmár lehet indítani a projectet: `mvn clean package glassfish:deploy`
+5. Mostmár lehet indítani a projectet: `mvn clean package glassfish:deploy` -al, de a MongoDB hiánya miatt még nem fog rendesen működni.
 
 
 Megjegyzés: Ha egyszer már megvolt a deploy, akkor utána a `glassfish:redeploy` -al lehet megint deploy-olni.
