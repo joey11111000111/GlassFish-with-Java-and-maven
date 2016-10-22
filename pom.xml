@@ -31,6 +31,12 @@
             <version>3.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- To use mongoDB -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.12.3</version>
+        </dependency>
     </dependencies>
 
     <build>
