@@ -2,14 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f80e210-3978-4f1a-8fc8-a8c89f6cb00e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/glassfish/test/app/mongodb/DeleteServlet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/glassfish/test/app/mongodb/ReadServlet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/glassfish/test/app/mongodb/User.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/index.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest.war" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest/WEB-INF/classes/glassfish/test/app/WelcomeServlet.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest/WEB-INF/classes/glassfish/test/app/mongodb/DeleteServlet.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest/WEB-INF/classes/glassfish/test/app/mongodb/InsertServlet.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest/WEB-INF/classes/glassfish/test/app/mongodb/ReadServlet.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest/WEB-INF/classes/glassfish/test/app/mongodb/User.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest/WEB-INF/glassfish-web.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest/WEB-INF/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/GlassFishTest/WEB-INF/lib/mongo-java-driver-2.12.3.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/glassfish/test/app/WelcomeServlet.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/glassfish/test/app/mongodb/DeleteServlet.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/glassfish/test/app/mongodb/InsertServlet.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/glassfish/test/app/mongodb/ReadServlet.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/glassfish/test/app/mongodb/User.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GlassFishTest.iml" afterPath="$PROJECT_DIR$/GlassFishTest.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/glassfish/test/app/WelcomeServlet.java" afterPath="$PROJECT_DIR$/src/main/java/glassfish/test/app/WelcomeServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="joey-manual-structure.iws" />
     <ignored path=".idea/workspace.xml" />
