@@ -1,14 +1,12 @@
 package socket;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.ObjectOutputStream;
 //source: https://www.tutorialspoint.com/java/java_networking.htm
 import java.net.Socket;
 
-import proto.MyIntegerProto;
+import sockprotoutil.SockProtoUtil;
 
 public class SocketClient {
 
@@ -17,40 +15,33 @@ public class SocketClient {
         String serverName = args[0];
         int port = Integer.parseInt(args[1]);
 
+        Socket cliSocket = null;
+        ObjectOutputStream objectOut = null;
+        DataInputStream dataIn = null;
         try {
             // Print info about the connection and try to connect to the server
             System.out.println("Connecting to " + serverName + " on port " + port);
-            Socket client = new Socket(serverName, port);
-
-            System.out.println("Just connected to " + client.getRemoteSocketAddress());
-            OutputStream outToServer = client.getOutputStream();
+            cliSocket = new Socket(serverName, port);
+            System.out.println("Just connected to " + cliSocket.getRemoteSocketAddress());
 
             // Send protobuff messages to the server
-            DataOutputStream out = new DataOutputStream(outToServer);
-            for (int i=0; i<5000; i++) {
-                System.out.println("sending:" + i);
-                out.write(createProtoMessage(i).toByteArray());
-                out.flush();
+            objectOut = new ObjectOutputStream(cliSocket.getOutputStream());
+            for (int i = 0; i < 200; i++) {
+                System.out.println("sending to server: " + i);
+                objectOut.writeObject(SockProtoUtil.createProtoMessage(i).toByteArray());
             }
-            // Send exit message
-            out.write(createProtoMessage(-1).toByteArray());
-            out.flush();
-            System.out.println("sent exit signal");
+            objectOut.writeObject(SockProtoUtil.exitSignalObject());
 
-            // Prepare to read text message from server
-            InputStream inFromServer = client.getInputStream();
-            DataInputStream in = new DataInputStream(inFromServer);
-
-            System.out.println("Server says " + in.readUTF());
-            client.close();
+            // Read and print message from server
+            dataIn = new DataInputStream(cliSocket.getInputStream());
+            System.out.println("Server says " + dataIn.readUTF());
         }catch(IOException e) {
             e.printStackTrace();
+        } finally {
+            SockProtoUtil.closeIfPossible(dataIn, objectOut, cliSocket);
         }
     }
 
-    private static MyIntegerProto.MyInteger createProtoMessage(int intValue) {
-        return MyIntegerProto.MyInteger.newBuilder().setIntValue(intValue).build();
-    }
 
 
 }

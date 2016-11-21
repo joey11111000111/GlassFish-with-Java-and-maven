@@ -1,14 +1,13 @@
 package socket;
 
-//source: https://www.tutorialspoint.com/java/java_networking.htm
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 
 import proto.MyIntegerProto;
+import sockprotoutil.SockProtoUtil;
 
 public class SocketServer extends Thread {
     private ServerSocket serverSocket;
@@ -21,44 +20,43 @@ public class SocketServer extends Thread {
     @Override
     public void run() {
         while(true) {
+            Socket cliSocket = null;
+            ObjectInputStream objectIn = null;
+            DataOutputStream dataOut = null;
             try {
                 // Print info about state and wait for connection
                 System.out.println("Waiting for client on port " +
                     serverSocket.getLocalPort() + "...");
-                Socket server = serverSocket.accept();
+                cliSocket = serverSocket.accept();
 
                 // Print notification message about the established connection
-                System.out.println("Just connected to " + server.getRemoteSocketAddress());
+                System.out.println("Just connected to " + cliSocket.getRemoteSocketAddress());
 
                 // Read protobuff messages from client
-                DataInputStream in = new DataInputStream(server.getInputStream());
-                int i = 0;
-                while (true) {
-                    while (in.available() == 0) {
-
+                objectIn = new ObjectInputStream(cliSocket.getInputStream());
+                try {
+                    while (true) {
+                        byte[] bytes;
+                        try {
+                            bytes = (byte[])objectIn.readObject();
+                        } catch (ClassCastException cce) {
+                            break;
+                        }
+                        MyIntegerProto.MyInteger message = MyIntegerProto.MyInteger.parseFrom(bytes);
+                        System.out.println("message from client: " + message.getIntValue());
                     }
-                    System.out.println("input available");
-                    MyIntegerProto.MyInteger protoMessage = MyIntegerProto.MyInteger.parseFrom(in);
-                    int intValue = protoMessage.getIntValue();
-                    if (intValue == -1) {
-                        System.out.println("breaking from while");
-                        break;
-                    }
-                    System.out.println(intValue);
-                }
 
-                // Send goodbye message to client
-                DataOutputStream out = new DataOutputStream(server.getOutputStream());
-                out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress()
+                    System.out.println("----- end of input from client -----");
+                    dataOut = new DataOutputStream(cliSocket.getOutputStream());
+                    dataOut.writeUTF("Thank you for connecting to " + cliSocket.getLocalSocketAddress()
                     + "\nGoodbye!");
-                server.close();
-
-            }catch(SocketTimeoutException s) {
-                System.out.println("Socket timed out!");
-                break;
-            }catch(IOException e) {
+                } catch (Exception e) {
+                    e.printStackTrace(System.out);
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
-                break;
+            } finally {
+                SockProtoUtil.closeIfPossible(dataOut, objectIn, cliSocket);
             }
         }
     }
@@ -72,4 +70,5 @@ public class SocketServer extends Thread {
             e.printStackTrace();
         }
     }
+
 }
