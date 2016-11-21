@@ -35,14 +35,9 @@ public class SocketServer extends Thread {
                 // Read protobuff messages from client
                 objectIn = new ObjectInputStream(cliSocket.getInputStream());
                 try {
-                    while (true) {
-                        byte[] bytes;
-                        try {
-                            bytes = (byte[])objectIn.readObject();
-                        } catch (ClassCastException cce) {
-                            break;
-                        }
-                        MyIntegerProto.MyInteger message = MyIntegerProto.MyInteger.parseFrom(bytes);
+                    Object rawMessage;
+                    while ( !SockProtoUtil.isExitSignal(rawMessage = objectIn.readObject()) ) {
+                        MyIntegerProto.MyInteger message = MyIntegerProto.MyInteger.parseFrom((byte[])rawMessage);
                         System.out.println("message from client: " + message.getIntValue());
                     }
 

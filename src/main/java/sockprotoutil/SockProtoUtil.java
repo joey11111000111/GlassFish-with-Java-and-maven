@@ -6,6 +6,8 @@ import proto.MyIntegerProto;
 
 public class SockProtoUtil {
 
+    private static class ExitSignal implements Serializable {}
+
     private SockProtoUtil() {
     }
 
@@ -22,8 +24,16 @@ public class SockProtoUtil {
     }
 
     public static Object exitSignalObject() {
-        class ExitSignal implements Serializable {}
         return new ExitSignal();
+    }
+
+    public static boolean isExitSignal(Object obj) {
+        try {
+            ExitSignal signal = (ExitSignal)obj;
+            return true;
+        } catch (ClassCastException cce) {
+            return false;
+        }
     }
 
     public static MyIntegerProto.MyInteger createProtoMessage(int intValue) {
