@@ -29,7 +29,6 @@ public class SocketClient {
             Instant timeLimit = Instant.now().plusSeconds(3);
             objectOut = new ObjectOutputStream(cliSocket.getOutputStream());
             for (int i = 0;true; i++) {
-                //System.out.println("sending to server: " + i);
                 objectOut.writeObject(SockProtoUtil.createProtoMessage(i).toByteArray());
                 Instant current = Instant.now();
                 if (timeLimit.isBefore(current)) {
@@ -37,7 +36,9 @@ public class SocketClient {
                 }
 
             }
+            System.out.println("--- out of loop ---");
             objectOut.writeObject(SockProtoUtil.exitSignalObject());
+            System.out.println("--- sent exit signal ---");
 
             // Read and print message from server
             dataIn = new DataInputStream(cliSocket.getInputStream());

@@ -50,10 +50,7 @@ public class SocketServer extends Thread {
                         MyIntegerProto.MyInteger message = MyIntegerProto.MyInteger.parseFrom((byte[])rawMessage);
                         MyInteger myInt = new MyInteger(message.getIntValue());
                         collection.insert(myInt);
-
-                        System.out.println("message from client: " + message.getIntValue());
                     }
-                    rawMessage = objectIn.readObject();
 
                     System.out.println("----- end of input from client -----");
                     dataOut = new DataOutputStream(cliSocket.getOutputStream());
