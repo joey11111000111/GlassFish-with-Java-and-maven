@@ -30,7 +30,7 @@ public class SocketServer extends Thread {
             DataOutputStream dataOut = null;
             try {
                 // Print info about state and wait for connection
-                System.out.println("Waiting for client on port " +
+               System.out.println("Waiting for client on port " +
                     serverSocket.getLocalPort() + "...");
                 cliSocket = serverSocket.accept();
 
@@ -50,6 +50,7 @@ public class SocketServer extends Thread {
                         MyIntegerProto.MyInteger message = MyIntegerProto.MyInteger.parseFrom((byte[])rawMessage);
                         MyInteger myInt = new MyInteger(message.getIntValue());
                         collection.insert(myInt);
+                        
                         System.out.println("message from client: " + message.getIntValue());
                     }
 
@@ -63,7 +64,9 @@ public class SocketServer extends Thread {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                SockProtoUtil.closeIfPossible(dataOut, objectIn, cliSocket);
+                SockProtoUtil.closeIfPossible(dataOut, objectIn, cliSocket, serverSocket);
+                System.out.println("Done!");
+                break;
             }
         }
     }
