@@ -10,6 +10,8 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 
+import proto.MyInteger;
+import proto.MyIntegerProto;
 import sockprotoutil.SockProtoUtil;
 
 public class SocketServer extends Thread {
@@ -44,13 +46,13 @@ public class SocketServer extends Thread {
                     DBCollection collection = db.getCollection("myIntegers");
 
                     Object rawMessage;
-//                    while ( !SockProtoUtil.isExitSignal(rawMessage = objectIn.readObject()) ) {
-//                        MyIntegerProto.MyInteger message = MyIntegerProto.MyInteger.parseFrom((byte[])rawMessage);
-//                        MyInteger myInt = new MyInteger(message.getIntValue());
-//                        collection.insert(myInt);
-//
-//                        System.out.println("message from client: " + message.getIntValue());
-//                    }
+                    while ( !SockProtoUtil.isExitSignal(rawMessage = objectIn.readObject()) ) {
+                        MyIntegerProto.MyInteger message = MyIntegerProto.MyInteger.parseFrom((byte[])rawMessage);
+                        MyInteger myInt = new MyInteger(message.getIntValue());
+                        collection.insert(myInt);
+
+                        System.out.println("message from client: " + message.getIntValue());
+                    }
                     rawMessage = objectIn.readObject();
 
                     System.out.println("----- end of input from client -----");

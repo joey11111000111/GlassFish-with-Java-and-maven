@@ -28,15 +28,15 @@ public class SocketClient {
             // Send protobuff messages to the server for 1 second
             Instant timeLimit = Instant.now().plusSeconds(3);
             objectOut = new ObjectOutputStream(cliSocket.getOutputStream());
-//            for (int i = 0;true; i++) {
-//                //System.out.println("sending to server: " + i);
-//                objectOut.writeObject(SockProtoUtil.createProtoMessage(i).toByteArray());
-//                Instant current = Instant.now();
-//                if (timeLimit.isBefore(current)) {
-//                    break;
-//                }
-//
-//            }
+            for (int i = 0;true; i++) {
+                //System.out.println("sending to server: " + i);
+                objectOut.writeObject(SockProtoUtil.createProtoMessage(i).toByteArray());
+                Instant current = Instant.now();
+                if (timeLimit.isBefore(current)) {
+                    break;
+                }
+
+            }
             objectOut.writeObject(SockProtoUtil.exitSignalObject());
 
             // Read and print message from server

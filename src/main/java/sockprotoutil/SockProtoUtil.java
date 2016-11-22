@@ -6,7 +6,9 @@ import proto.MyIntegerProto;
 
 public class SockProtoUtil {
 
-    private static class ExitSignal implements Serializable {}
+    private static class ExitSignal implements Serializable {
+        private static final long serialVersionUID = 1L;
+    }
 
     private SockProtoUtil() {
     }
