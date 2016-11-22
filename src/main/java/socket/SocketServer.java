@@ -6,6 +6,11 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+
+import proto.MyInteger;
 import proto.MyIntegerProto;
 import sockprotoutil.SockProtoUtil;
 
@@ -35,9 +40,16 @@ public class SocketServer extends Thread {
                 // Read protobuff messages from client
                 objectIn = new ObjectInputStream(cliSocket.getInputStream());
                 try {
+                    // Prepare mongoDB
+                    MongoClient mongo = new MongoClient("localhost", 27017);
+                    DB db = mongo.getDB("GlassfishDB");
+                    DBCollection collection = db.getCollection("myIntegers");
+
                     Object rawMessage;
                     while ( !SockProtoUtil.isExitSignal(rawMessage = objectIn.readObject()) ) {
                         MyIntegerProto.MyInteger message = MyIntegerProto.MyInteger.parseFrom((byte[])rawMessage);
+                        MyInteger myInt = new MyInteger(message.getIntValue());
+                        collection.insert(myInt);
                         System.out.println("message from client: " + message.getIntValue());
                     }
 
