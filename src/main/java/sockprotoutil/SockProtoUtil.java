@@ -28,12 +28,7 @@ public class SockProtoUtil {
     }
 
     public static boolean isExitSignal(Object obj) {
-        try {
-            ExitSignal signal = (ExitSignal)obj;
-            return true;
-        } catch (ClassCastException cce) {
-            return false;
-        }
+        return obj instanceof ExitSignal;
     }
 
     public static MyIntegerProto.MyInteger createProtoMessage(int intValue) {
