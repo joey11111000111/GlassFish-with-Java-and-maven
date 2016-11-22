@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 //source: https://www.tutorialspoint.com/java/java_networking.htm
 import java.net.Socket;
+import java.time.Instant;
 
 import sockprotoutil.SockProtoUtil;
 
@@ -24,11 +25,17 @@ public class SocketClient {
             cliSocket = new Socket(serverName, port);
             System.out.println("Just connected to " + cliSocket.getRemoteSocketAddress());
 
-            // Send protobuff messages to the server
+            // Send protobuff messages to the server for 1 second
+            Instant timeLimit = Instant.now().plusSeconds(1);
             objectOut = new ObjectOutputStream(cliSocket.getOutputStream());
-            for (int i = 0; i < 200; i++) {
+            for (int i = 0;true; i++) {
                 System.out.println("sending to server: " + i);
                 objectOut.writeObject(SockProtoUtil.createProtoMessage(i).toByteArray());
+                Instant current = Instant.now();
+                if (timeLimit.isBefore(current)) {
+                    break;
+                }
+
             }
             objectOut.writeObject(SockProtoUtil.exitSignalObject());
 
