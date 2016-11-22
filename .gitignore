@@ -54,3 +54,5 @@ modules.xml
 .idea/misc.xml
 .idea/
 *.ipr
+nbactions.xml
+nb-configuration.xml

@@ -12,8 +12,8 @@ public class SocketClient {
 
     public static void main(String [] args) {
         // Extracting server info from command line arguments
-        String serverName = args[0];
-        int port = Integer.parseInt(args[1]);
+        String serverName = "localhost";
+        int port = 3333;
 
         Socket cliSocket = null;
         ObjectOutputStream objectOut = null;
