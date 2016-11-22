@@ -28,17 +28,17 @@ public class SocketClient {
             // Send protobuff messages to the server for 1 second
             Instant timeLimit = Instant.now().plusSeconds(3);
             objectOut = new ObjectOutputStream(cliSocket.getOutputStream());
-            for (int i = 0;true; i++) {
-                objectOut.writeObject(SockProtoUtil.createProtoMessage(i).toByteArray());
+            int counter;
+            for (counter = 0;true; counter++) {
+                objectOut.writeObject(SockProtoUtil.createProtoMessage(counter).toByteArray());
                 Instant current = Instant.now();
                 if (timeLimit.isBefore(current)) {
                     break;
                 }
 
             }
-            System.out.println("--- out of loop ---");
+            System.out.println("Sent a total number of " + (counter+1) + " objects.");
             objectOut.writeObject(SockProtoUtil.exitSignalObject());
-            System.out.println("--- sent exit signal ---");
 
             // Read and print message from server
             dataIn = new DataInputStream(cliSocket.getInputStream());

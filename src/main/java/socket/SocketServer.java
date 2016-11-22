@@ -52,7 +52,6 @@ public class SocketServer extends Thread {
                         collection.insert(myInt);
                     }
 
-                    System.out.println("----- end of input from client -----");
                     dataOut = new DataOutputStream(cliSocket.getOutputStream());
                     dataOut.writeUTF("Thank you for connecting to " + cliSocket.getLocalSocketAddress()
                     + "\nGoodbye!");
