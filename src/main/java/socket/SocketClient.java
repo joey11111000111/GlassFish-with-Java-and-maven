@@ -13,7 +13,8 @@ public class SocketClient {
 
     public static void main(String [] args) {
         // Extracting server info from command line arguments
-        String serverName = "192.168.43.57";
+//        String serverName = "192.168.43.57";
+        String serverName = "192.168.43.96";
         int port = 3333;
 
         Socket cliSocket = null;
@@ -26,7 +27,7 @@ public class SocketClient {
             System.out.println("Just connected to " + cliSocket.getRemoteSocketAddress());
 
             // Send protobuff messages to the server for 1 second
-            Instant timeLimit = Instant.now().plusSeconds(3);
+            Instant timeLimit = Instant.now().plusSeconds(3000000);
             objectOut = new ObjectOutputStream(cliSocket.getOutputStream());
             int counter;
             for (counter = 0;true; counter++) {
