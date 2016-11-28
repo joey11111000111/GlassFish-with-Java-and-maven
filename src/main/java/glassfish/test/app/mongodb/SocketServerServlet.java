@@ -9,17 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import socket.ClientManager;
-import socket.SocketServer;
 
 @WebServlet(value="/socketserver", name="SocketServerServlet")
 public class SocketServerServlet extends HttpServlet {
 
-    private static SocketServer socketServer;
+    private static ClientManager clientManager = null;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ClientManager clientManager = new ClientManager();
-        clientManager.handleClients();
+        if (clientManager == null) {
+            clientManager = new ClientManager();
+            clientManager.handleClients();
+        } else {
+            clientManager.close();
+            clientManager = null;
+        }
     }
 
 

@@ -53,7 +53,6 @@ public class SocketClient {
             System.err.println("IO exception happened");
             e.printStackTrace();
         } finally {
-            System.out.println("finally block");
             SockProtoUtil.closeIfPossible(CloseOptions.IGNORE_FAILURE, dataIn, objectOut, cliSocket);
         }
     }

@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import sockprotoutil.SockProtoUtil;
 import sockprotoutil.SockProtoUtil.CloseOptions;
@@ -31,11 +32,10 @@ public class ClientManager {
 
     private final ServerSocket serSocket;
     private final int PORT = 3333;
-    private boolean alive;
 
     public ClientManager() throws IOException {
         serSocket = new ServerSocket(PORT);
-        alive = true;
+        lock = new ReentrantLock();
         System.out.println("Waiting for client on port " + serSocket.getLocalPort() + "...");
     }
 
@@ -48,7 +48,7 @@ public class ClientManager {
                     System.out.println("Just connected to " + cliSocket.getRemoteSocketAddress());
                     ClientManager.clientConnected();
                 } catch (SocketException se) {
-                    System.out.println("Server is shutting dows...");
+                    System.out.println("Server is shutting down...");
                     break;
                 } catch (IOException e) {
                     System.err.println("Could not accept a client! Continue listening...");
@@ -76,8 +76,7 @@ public class ClientManager {
         }
     }
 
-    public void stopListening() {
-        alive = false;
+    public void close() {
         SockProtoUtil.closeIfPossible(CloseOptions.NOTIFY_FAILURE, serSocket);
     }
 
