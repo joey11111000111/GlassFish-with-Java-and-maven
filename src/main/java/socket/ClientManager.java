@@ -3,10 +3,31 @@ package socket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.concurrent.locks.Lock;
 
 import sockprotoutil.SockProtoUtil;
+import sockprotoutil.SockProtoUtil.CloseOptions;
 
 public class ClientManager {
+
+    private static int connectedClientCount = 0;
+    private static Lock lock;
+
+    public static void clientConnected() {
+        lock.lock();
+        connectedClientCount++;
+        System.out.println("Number of connected clients: " + connectedClientCount);
+        lock.unlock();
+    }
+
+
+    public static void clientLeft() {
+        lock.lock();
+        connectedClientCount--;
+        System.out.println("Number of connected clients: " + connectedClientCount);
+        lock.unlock();
+    }
 
     private final ServerSocket serSocket;
     private final int PORT = 3333;
@@ -20,15 +41,15 @@ public class ClientManager {
 
     public void handleClients() {
         try {
-            while (alive) {
+            while (true) {
                 Socket cliSocket;
                 try {
                     cliSocket = serSocket.accept();
-                    if (!alive) {
-                        SockProtoUtil.closeIfPossible(cliSocket);
-                        break;
-                    }
                     System.out.println("Just connected to " + cliSocket.getRemoteSocketAddress());
+                    ClientManager.clientConnected();
+                } catch (SocketException se) {
+                    System.out.println("Server is shutting dows...");
+                    break;
                 } catch (IOException e) {
                     System.err.println("Could not accept a client! Continue listening...");
                     e.printStackTrace();
@@ -42,7 +63,7 @@ public class ClientManager {
                 } catch (IOException e) {
                     System.err.println("Could not create client handling thread! Go back to listening...");
                     e.printStackTrace();
-                    SockProtoUtil.closeIfPossible(cliSocket);
+                    SockProtoUtil.closeIfPossible(CloseOptions.IGNORE_FAILURE, cliSocket);
                     continue;
                 }
 
@@ -51,13 +72,13 @@ public class ClientManager {
             }//while
 
         } finally {
-            SockProtoUtil.closeIfPossible(serSocket);
+            SockProtoUtil.closeIfPossible(CloseOptions.IGNORE_FAILURE, serSocket);
         }
     }
 
     public void stopListening() {
         alive = false;
-        SockProtoUtil.closeIfPossible(serSocket);
+        SockProtoUtil.closeIfPossible(CloseOptions.NOTIFY_FAILURE, serSocket);
     }
 
 

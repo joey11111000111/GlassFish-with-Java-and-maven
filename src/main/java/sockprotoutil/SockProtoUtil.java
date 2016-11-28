@@ -6,6 +6,10 @@ import proto.MyIntegerProto;
 
 public class SockProtoUtil {
 
+    public static enum CloseOptions {
+        IGNORE_FAILURE, NOTIFY_FAILURE
+    }
+
     private static class ExitSignal implements Serializable {
         private static final long serialVersionUID = 1L;
     }
@@ -13,13 +17,16 @@ public class SockProtoUtil {
     private SockProtoUtil() {
     }
 
-    public static void closeIfPossible(AutoCloseable... autoCloseables) {
+    public static void closeIfPossible(CloseOptions option, AutoCloseable... autoCloseables) {
         for (AutoCloseable currentCloseable : autoCloseables) {
             if (currentCloseable != null) {
                 try {
                     currentCloseable.close();
                 } catch (Exception e) {
-                    e.printStackTrace(System.out);
+                    if (option == CloseOptions.NOTIFY_FAILURE) {
+                        System.err.println("Could not close autoclosable!");
+                        e.printStackTrace(System.out);
+                    }
                 }
             }
         }

@@ -46,6 +46,8 @@ public class SocketServer implements Runnable {
                 } catch (ClassNotFoundException cnfe) {
                     System.err.println("Client sent illegal data type!");
                     cnfe.printStackTrace();
+                } finally {
+                    ClientManager.clientLeft();
                 }
             } catch (IOException ioe) {
                 System.err.println("Could not create IO streams from socket!");

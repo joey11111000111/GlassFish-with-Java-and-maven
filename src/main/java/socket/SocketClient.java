@@ -5,16 +5,19 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 //source: https://www.tutorialspoint.com/java/java_networking.htm
 import java.net.Socket;
+import java.net.SocketException;
 import java.time.Instant;
 
 import sockprotoutil.SockProtoUtil;
+import sockprotoutil.SockProtoUtil.CloseOptions;
 
 public class SocketClient {
 
     public static void main(String [] args) {
         // Extracting server info from command line arguments
 //        String serverName = "192.168.43.57";
-        String serverName = "192.168.43.96";
+//        String serverName = "192.168.43.96";
+        String serverName = "localhost";
         int port = 3333;
 
         Socket cliSocket = null;
@@ -26,7 +29,7 @@ public class SocketClient {
             cliSocket = new Socket(serverName, port);
             System.out.println("Just connected to " + cliSocket.getRemoteSocketAddress());
 
-            // Send protobuff messages to the server for 1 second
+            // Send protobuff messages to the server for given seconds
             Instant timeLimit = Instant.now().plusSeconds(3000000);
             objectOut = new ObjectOutputStream(cliSocket.getOutputStream());
             int counter;
@@ -44,10 +47,14 @@ public class SocketClient {
             // Read and print message from server
             dataIn = new DataInputStream(cliSocket.getInputStream());
             System.out.println("Server says " + dataIn.readUTF());
+        } catch (SocketException se) {
+            System.out.println("Server shut down, stop data transfer...");
         }catch(IOException e) {
+            System.err.println("IO exception happened");
             e.printStackTrace();
         } finally {
-            SockProtoUtil.closeIfPossible(dataIn, objectOut, cliSocket);
+            System.out.println("finally block");
+            SockProtoUtil.closeIfPossible(CloseOptions.IGNORE_FAILURE, dataIn, objectOut, cliSocket);
         }
     }
 
