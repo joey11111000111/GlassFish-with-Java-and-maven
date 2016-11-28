@@ -13,8 +13,31 @@ import sockprotoutil.SockProtoUtil.CloseOptions;
 
 public class SocketClient {
 
+    private static class ThreadStatus {
+        private boolean alive = true;
+
+        public boolean isAlive() {
+            return alive;
+        }
+
+        public void setAlive(boolean alive) {
+            this.alive = alive;
+        }
+    }
+
     public static void main(String [] args) {
-        // Extracting server info from command line arguments
+        final ThreadStatus status = new ThreadStatus();
+        Runnable userReader = () -> {
+            try {
+                System.in.read();
+                status.setAlive(false);
+            } catch (IOException e) {
+                System.err.println("IOException while trying to read from user!");
+            }
+        };
+        Thread statusThread = new Thread(userReader);
+        statusThread.start();
+
 //        String serverName = "192.168.43.57";
 //        String serverName = "192.168.43.96";
         String serverName = "localhost";
@@ -33,7 +56,7 @@ public class SocketClient {
             Instant timeLimit = Instant.now().plusSeconds(3000000);
             objectOut = new ObjectOutputStream(cliSocket.getOutputStream());
             int counter;
-            for (counter = 0;true; counter++) {
+            for (counter = 0; status.isAlive(); counter++) {
                 objectOut.writeObject(SockProtoUtil.createProtoMessage(counter).toByteArray());
                 Instant current = Instant.now();
                 if (timeLimit.isBefore(current)) {
