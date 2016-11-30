@@ -36,6 +36,7 @@ public class SocketClient {
             }
         };
         Thread statusThread = new Thread(userReader);
+        statusThread.setDaemon(true);
         statusThread.start();
 
 //        String serverName = "192.168.43.57";
@@ -79,7 +80,5 @@ public class SocketClient {
             SockProtoUtil.closeIfPossible(CloseOptions.IGNORE_FAILURE, dataIn, objectOut, cliSocket);
         }
     }
-
-
 
 }

@@ -49,7 +49,7 @@ public class ClientManager {
                     ClientManager.clientConnected();
                 } catch (SocketException se) {
                     System.out.println("Server is shutting down...");
-                    break;
+                    return;
                 } catch (IOException e) {
                     System.err.println("Could not accept a client! Continue listening...");
                     e.printStackTrace();
@@ -76,7 +76,7 @@ public class ClientManager {
         }
     }
 
-    public void close() {
+    public void stopListening() {
         SockProtoUtil.closeIfPossible(CloseOptions.NOTIFY_FAILURE, serSocket);
     }
 

@@ -21,7 +21,7 @@ public class SocketServerServlet extends HttpServlet {
             clientManager = new ClientManager();
             clientManager.handleClients();
         } else {
-            clientManager.close();
+            clientManager.stopListening();
             clientManager = null;
         }
     }
